@@ -1,0 +1,9 @@
+levels	use_as	name	signature
+level1	positive	Immune	
+level1	positive	Mast	
+level1	negative	Epithelial	
+level1	negative	Stromal	
+level1	negative	HSPC	
+level2	positive	Mast	
+level2	negative	Tcell	
+level2	negative	Bcell	

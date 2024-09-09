@@ -1,0 +1,26 @@
+scGate_multi	CellOntology_name	CellOntology_ID
+Bcell	B cell	CL:0000236
+CD4T	CD4-positive, alpha-beta T cell	CL:0000624
+CD8T	CD8-positive, alpha-beta T cell	CL:0000625
+Endothelial	endothelial cell	CL:0000115
+Epithelial	epithelial cell	CL:0000066
+Fibroblast	fibroblast	CL:0000057
+Macrophage	macrophage	CL:0000235
+Mast	mast cell	CL:0000097
+Monocyte	monocyte	CL:0000576
+Neutrophils	neutrophil	CL:0000775
+NK	natural killer cell	CL:0000623
+panDC	dendritic cell	CL:0000451
+PlasmaCell	plasma cell	CL:0000786
+Tcell	T cell	CL:0000084
+Tcell.alphabeta	alpha-beta T cell	CL:0000789
+Stromal	stromal cell	CL:0000499
+Myeloid	myeloid cell	CL:0000763
+PanBcell	lymphocyte of B lineage	CL:0000945
+Immune	leukocyte	CL:0000738
+Erythrocyte	erythrocyte	CL:0000232
+Megakaryocyte	megakaryocyte	CL:0000556
+Bcell.GerminalCenter	germinal center B cell	CL:0000844
+MoMac	monocyte_macrophage	CL:0000576_CL:0000235
+MoMacDC	monocyte_macrophage_dendritic cell	CL:0000576_CL:0000235_CL:0000451
+MoMacDCMast	monocyte_macrophage_dendritic cell_mast cell	CL:0000576_CL:0000235_CL:0000451_CL:0000097

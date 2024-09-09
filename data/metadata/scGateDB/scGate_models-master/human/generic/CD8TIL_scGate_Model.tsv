@@ -1,0 +1,27 @@
+levels	use_as	name	signature
+level1	positive	Immune	
+level1	positive	Lymphoid	
+level1	positive	Tcell	
+level1	negative	Epithelial	
+level1	negative	Stromal2	MMP2;COL1A1;COL1A2;COL5A1;LUM;PDGFRA
+level1	negative	Erythrocyte	
+level2	positive	Lymphoid	
+level2	positive	Tcell	
+level2	negative	Myeloid	
+level2	negative	MoMacDC	
+level2	negative	TAM		
+level2	negative	Neutrophils	
+level2	negative	Erythrocyte	
+level3	positive	Tcell	
+level3	positive	Talphabeta	
+level3	negative	Bcell	
+level3	negative	NK	
+level3	negative	Plasma_cell	
+level4	positive	CD8T	
+level4	negative	Tgammadelta	
+level4	negative	Tgd1	
+level4	negative	Tgd2	
+level4	negative	CD4T	
+level4	negative	Treg	
+level4	negative	CD8_INN	FCER1G;IKZF2;TYROBP
+level4	negative	CD8_INN2	KIR2DL3;KLRC3;KIR3DL2;KLRC2

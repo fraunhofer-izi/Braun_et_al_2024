@@ -1,0 +1,7 @@
+levels	use_as	name	signature
+level1	positive	Erythrocyte	
+level1	negative	Immune	
+level1	negative	Epithelial	
+level1	negative	Fibroblast	
+level1	negative	Stromal	
+level2	positive	Erythrocyte	

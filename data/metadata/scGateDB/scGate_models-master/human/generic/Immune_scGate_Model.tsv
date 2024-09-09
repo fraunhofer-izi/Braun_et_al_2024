@@ -1,0 +1,6 @@
+levels	use_as	name	signature
+level1	positive	Immune	
+level1	positive	Plasma_cell	
+level1	negative	Epithelial	
+level1	negative	Endothelial	
+level1	negative	Stromal	
