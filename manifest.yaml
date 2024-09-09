@@ -1,25 +1,11 @@
 # project and workdata paths
 base:
-  workdata:  "/mnt/ribolution/user_worktmp/michael.rade/work/2024-BCMA-CAR-Koeln/"
+  workdata:  "<path to data>/"
 
 multi_omics:
-  fastq:  "/mnt/ribolution/user_worktmp/michael.rade/work/2024-BCMA-CAR-Koeln/data/multi_omics/fastq/"
-  cellranger:  "/mnt/ribolution/user_worktmp/michael.rade/work/2024-BCMA-CAR-Koeln/data/multi_omics/cellranger/"
-  work:  "/mnt/ribolution/user_worktmp/michael.rade/work/2024-BCMA-CAR-Koeln/meta/multi_omics/"
+  fastq:  "<path to fastq>"
+  cellranger:  "<path to cellranger output>"
+  work:  "<path to data>/"
 
 spatial:
-  cellranger:  "/mnt/ribolution/user_worktmp/christina.kuhn/work/Carvykty_Sondenetablierung_Spatial/Spacranger_slurm/"
-  # car_pos:  "/mnt/ribolution/user_worktmp/christina.kuhn/work/Carvykty_Sondenetablierung_Spatial/seurat_objects/C24_13076_Sonden_SpikeIn_one_probe.rds" # with CAR probes
-  # car_wo_probes:  "/mnt/ribolution/user_worktmp/christina.kuhn/work/Carvykty_Sondenetablierung_Spatial/seurat_objects/C24_13076_one_probe.rds" # without CAR probes
-
-other_data:
-  bcma_car:
-    work:  "/mnt/ribolution/user_worktmp/michael.rade/work/2023-BCMA-CAR/meta/"
-  gao_et_al:
-    work:  "/mnt/ribolution/user_worktmp/michael.rade/work/2024-BCMA-CAR-Koeln/data/gao_et_al/"
-    data:  "/mnt/ribolution/user_worktmp/michael.rade/work/2024-BCMA-CAR-Koeln/data/gao_et_al/data_dl/"
-  huuhtanen_et_al:
-    work:  "/mnt/ribolution/user_worktmp/michael.rade/work/2024-BCMA-CAR-Koeln/data/huuhtanen_et_al/"
-
-meta:
-  work:  "/mnt/ribolution/user_worktmp/michael.rade/work/2024-BCMA-CAR-Koeln/meta/"
+  cellranger:  "<path to cellranger output>"
