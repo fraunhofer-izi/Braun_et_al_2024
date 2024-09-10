@@ -692,5 +692,130 @@ plot_cnv(infercnv_c2,title = "Clone 2",png_res=400,cluster_references=F,output_f
 plot_cnv(infercnv_Cl_Other,title = "Other clones",png_res=400,cluster_references=F,output_filename="publication/figures_tables/supps/fig_02_copy_number_heatmap_C",output_format="png",obs_title = "Other clones (cells)")
 
 
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# Copy-number plot chr 6
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+infercnv_c1_3 <- readRDS("data/infercnv_obj_Cl_1_3.rds")
+thresh = 0.05
+
+exprs.complete = infercnv_c1_3@expr.data
+exprs.complete[exprs.complete>(1+thresh)] <- 2
+exprs.complete[exprs.complete<(1-thresh)] <- 0
+exprs.complete[exprs.complete>=(1-thresh) & exprs.complete<=(1+thresh)] <- 1
+exprs.complete = exprs.complete - 1
+gain_perc_1_3 = apply(exprs.complete,1,function(x){sum(x==1)/length(x)})
+loss_perc_1_3 = apply(exprs.complete,1,function(x){sum(x==-1)/length(x)})
+
+data <- cytoGeno[cytoGeno$genome == 'hg19',]
+i.pl <- ideoView(data, chromosome='chr6', txtSize=1.5) +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(),
+    legend.position="none",
+    axis.title=element_text(size=8),
+    plot.margin = unit(c(0.2, 0.15, -.1, 0.35), "cm")
+  )
+
+df = data.frame(start=infercnv_c1_3@gene_order$start/1000000,
+                stop=infercnv_c1_3@gene_order$start/1000000,
+                chr= as.numeric(gsub(pattern = "chr","",infercnv_c1_3@gene_order$chr)),
+                gain=gain_perc_1_3,
+                del=-loss_perc_1_3)
+df = df[df$chr==6,]
+chr.pl <-
+  ggplot(data=df,aes(xmin=start,xmax=stop,ymin=del,ymax=0)) +
+  geom_rect(colour = "darkblue") +
+  geom_rect(aes(xmin=start,xmax=stop,ymin=0,ymax=gain),colour="darkred") +
+  xlim(0,max(data$chromEnd[data$chrom=="chr6"])/1000000) +
+  ylim(-.5, 1) +
+  xlab("position in mb")+
+  theme(axis.text = element_text(size=8),axis.title=element_text(size=8)) +
+  geom_hline(
+    yintercept=seq(-.8, 0.8, 0.2), linetype="dashed", color = "#999999AA",
+    linewidth = .2
+  )+
+  geom_hline(yintercept=c(0), color = "#000000AA", linewidth = .3)
+
+cnv.chr6.pl =
+  plot_grid(
+    plot_grid(i.pl),
+    plot_grid(chr.pl),
+    nrow=2, rel_heights = c(1.2, 2),
+    align = "hv"
+  )
+
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# Copy-number bubble plots chr 6
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+se.meta.sel = subset(se.meta.t, subset = orig.ident == "AphNB" | TopClones_2 != "Cl_Other")
+label = se.meta.sel$TopClones_2
+label[label=="Cl_Other"] = "Aph"
+se.meta.sel = AddMetaData(
+  object = se.meta.sel,
+  metadata = label,
+  col.name = 'Label'
+)
+genes = rownames(infercnv_c1_3@gene_order)[gain_perc_1_3>=0.75]
+
+mat = GetMatrixFromSeuratByGroupMulti(
+  obj= se.meta.sel, features = genes,
+  CT_L1_COARSE, Label
+)
+exp_mat = reshape2::melt(mat$exp_mat)
+colnames(exp_mat) = c("FTR", "GROUP", "AVE")
+exp_mat$GROUP = gsub(".+\\|", "", exp_mat$GROUP)
+percent_mat = reshape2::melt(mat$percent_mat)
+df = cbind(exp_mat, PERC = percent_mat$value)
+df$FTR = factor(df$FTR, levels = genes)
+df$GROUP = factor(df$GROUP, levels = rev(c("Aph","Cl_2","Cl_1_3")))
+
+bubble.cnv.pl = ggplot(df, aes(FTR, GROUP, fill = AVE, size = PERC * 100)) +
+  geom_point(colour="black", pch=21, stroke = .2) +
+  scale_size(range = c(1, 3.5), breaks = c(10, 25, 50, floor(max(df$PERC) * 10) * 10)) +
+  mytheme() +
+  theme(
+    legend.position = "bottom",
+    axis.text.x = element_text(angle=45, hjust=1, vjust = 1, size = rel(.9)),
+    legend.text = element_text(margin = margin(l = -5, unit = "pt"), size = rel(1)),
+    legend.title  = element_text(margin = margin(r = -2, l = 10, unit = "pt")),
+    legend.margin = margin(t = -3),
+    plot.title = element_text(hjust = 0.5, face = "plain")
+  ) +
+  scale_fill_scico(palette = "bilbao", begin =  0, end = 1, direction = -1) +
+  guides(
+    fill = guide_colorbar(
+      title = "Average\nExpression", order = 1,
+      title.hjust = 0, title.vjust = .75, barwidth = unit(4, 'lines'),
+      barheight = unit(.4, 'lines'), ticks.linewidth = 1.5/.pt
+    ),
+    size = guide_legend(title = "Percent\nExpressed")
+  ) + xlab(NULL) + ylab(NULL)
+
+
+
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# Figure S12
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+ggsave2(
+  filename="publication/figures_tables/supps/fig_S12.png",
+  plot_grid(
+    cnv.chr6.pl,
+    NULL,
+    plot_grid(
+      bubble.cnv.pl + theme(plot.margin = unit(c(4, 4, 4, 4), "pt"))
+    ),
+    nrow = 3, rel_heights = c(1.4, .05, 1),
+    labels = c("A)", "", "B)"), label_fontface = "bold", label_size = 10
+  ),
+  width = 170,
+  height = 80,
+  dpi = 400,
+  bg = "white",
+  units = "mm",
+  scale = 1.6
+)
+
+
 
 
