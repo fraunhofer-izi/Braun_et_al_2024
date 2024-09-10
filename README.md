@@ -41,8 +41,8 @@ Rscript code/publication/supps/fig_02_supps.R
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # scRNA-seq mutation
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-code/multi_omics/08_scRNA_mutations/01_indexing.sh
-code/multi_omics/08_scRNA_mutations/02_pileup.sh
+bash code/multi_omics/08_scRNA_mutations/01_indexing.sh
+bash code/multi_omics/08_scRNA_mutations/02_pileup.sh
 Rscript code/multi_omics/08_scRNA_mutations/03_summarize_data.R
 
 ```

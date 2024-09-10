@@ -12,6 +12,8 @@ Rscript code/multi_omics/04_qc_prep.R
 Rscript code/multi_omics/05_anno_1.R
 Rscript code/multi_omics/05_anno_2.R
 Rscript code/multi_omics/06_integration.R
+Rscript code/multi_omics/07_infercnv.R
+
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # WGS
@@ -19,6 +21,14 @@ Rscript code/multi_omics/06_integration.R
 # CTAT-VirusIntegrationFinder
 # bash code/wgs/ctat_vif/01_prep_db.sh
 # bash code/wgs/ctat_vif/02_run_vif.sh
+
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# scRNA-seq mutation
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+bash code/multi_omics/08_scRNA_mutations/01_indexing.sh
+bash code/multi_omics/08_scRNA_mutations/02_pileup.sh
+Rscript code/multi_omics/08_scRNA_mutations/03_summarize_data.R
+
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Main Figures
