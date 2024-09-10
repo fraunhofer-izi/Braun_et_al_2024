@@ -691,7 +691,6 @@ plot_cnv(infercnv_c1_3,title = "Clone 1_3",png_res=400,cluster_references=F,outp
 plot_cnv(infercnv_c2,title = "Clone 2",png_res=400,cluster_references=F,output_filename="publication/figures_tables/supps/fig_02_copy_number_heatmap_B",output_format="png",obs_title = "Clone 2 (cells)")
 plot_cnv(infercnv_Cl_Other,title = "Other clones",png_res=400,cluster_references=F,output_filename="publication/figures_tables/supps/fig_02_copy_number_heatmap_C",output_format="png",obs_title = "Other clones (cells)")
 
-
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Copy-number plot chr 6
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -792,8 +791,6 @@ bubble.cnv.pl = ggplot(df, aes(FTR, GROUP, fill = AVE, size = PERC * 100)) +
     size = guide_legend(title = "Percent\nExpressed")
   ) + xlab(NULL) + ylab(NULL)
 
-
-
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Figure S12
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -815,7 +812,3 @@ ggsave2(
   units = "mm",
   scale = 1.6
 )
-
-
-
-
