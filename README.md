@@ -25,6 +25,7 @@ Rscript code/multi_omics/04_qc_prep.R
 Rscript code/multi_omics/05_anno_1.R
 Rscript code/multi_omics/05_anno_2.R
 Rscript code/multi_omics/06_integration.R
+Rscript code/multi_omics/07_infercnv.R
 
 # Main Figure 2
 Rscript code/publication/main/fig_02.R
@@ -37,5 +38,11 @@ Rscript code/publication/supps/fig_02_supps.R
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 ...
 
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# scRNA-seq mutation
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+code/multi_omics/08_scRNA_mutations/01_indexing.sh
+code/multi_omics/08_scRNA_mutations/02_pileup.sh
+Rscript code/multi_omics/08_scRNA_mutations/03_summarize_data.R
 
 ```
