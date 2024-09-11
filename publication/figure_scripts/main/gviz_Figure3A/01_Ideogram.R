@@ -1,6 +1,6 @@
 Sys.setenv( TZ="Etc/GMT+1" )
 
-setwd('~/uranos_home/workspace/2024-BCMA-CAR-Koeln/gviz/IntegrationSite_coverage/')
+setwd('~/gviz/IntegrationSite_coverage/') #this can be changed
 
 library(Gviz)
 library(GenomicRanges)

@@ -14,8 +14,8 @@ library(BSgenome.Hsapiens.UCSC.hg38)
 library(stringr)
 
 
-# setwd('/mnt/ribolution/tertiary_analysis/2024-BCMA-CAR-Koeln/segemehl_realigned/')
-# setwd('~/uranos_home/workspace/2024-BCMA-CAR-Koeln/gviz/IntegrationSite_coverage/')
+# setwd('segemehl_realigned/') #this can be changed
+# setwd('IntegrationSite_coverage/')
 
 # set global environment objects that can be used in the functions
 
@@ -41,7 +41,7 @@ chim_coverage = 27
 chim_tick = 5
 coverage = 90
 all_tick = 25
-folder <- '/mnt/ribolution/tertiary_analysis/2024-BCMA-CAR-Koeln/segemehl_realigned/vis_reads/combine_runs/'
+folder <- 'path_to_segemehl_realigned/vis_reads/combine_runs/'
 
 file_names <- read.table(paste0(c(folder,
                                   'bam_list'),

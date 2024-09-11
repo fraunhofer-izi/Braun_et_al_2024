@@ -22,7 +22,7 @@ library(grid)
 # load table
 
 ## testing
-table <- '~/uranos_home/workspace/2024-BCMA-CAR-Koeln/gviz/KPNA4'
+table <- 'KPNA4'
 transcrip <- 2
 chr <- "chr3"
 gene <- "KPNA4_test"
@@ -94,8 +94,8 @@ myGene <- function(table, transcrip, chr, flank1, flank2, gene, IS){
   dev.off()
 }
 
-myGene('~/uranos_home/workspace/2024-BCMA-CAR-Koeln/gviz/KPNA4', 2, "chr3", 2, 3, "KPNA4", 160535998)
-myGene('~/uranos_home/workspace/2024-BCMA-CAR-Koeln/gviz/ZGPAT', 10, "chr20", 2, 3, "ZGPAT", 63719663) 
-myGene('~/uranos_home/workspace/2024-BCMA-CAR-Koeln/gviz/Polycomb-Associated_Non-Coding_RNAs', 4, "chr19", 3, 4, "MIDN", 1246860)
-myGene('~/uranos_home/workspace/2024-BCMA-CAR-Koeln/gviz/Polycomb-Associated_Non-Coding_RNAs', 2, "chr19", 3, 4, "lncRNA", 1246860)
-myGene('~/uranos_home/workspace/2024-BCMA-CAR-Koeln/gviz/Polycomb-Associated_Non-Coding_RNAs', 2, "chr19", 3, 4, "Polycomb-Associated Non-Coding RNAs", 1246860)
+myGene('KPNA4', 2, "chr3", 2, 3, "KPNA4", 160535998)
+myGene('ZGPAT', 10, "chr20", 2, 3, "ZGPAT", 63719663) 
+myGene('Polycomb-Associated_Non-Coding_RNAs', 4, "chr19", 3, 4, "MIDN", 1246860)
+myGene('Polycomb-Associated_Non-Coding_RNAs', 2, "chr19", 3, 4, "lncRNA", 1246860)
+myGene('Polycomb-Associated_Non-Coding_RNAs', 2, "chr19", 3, 4, "Polycomb-Associated Non-Coding RNAs", 1246860)

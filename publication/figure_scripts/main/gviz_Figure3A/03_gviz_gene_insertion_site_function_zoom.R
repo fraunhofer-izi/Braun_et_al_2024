@@ -21,7 +21,7 @@ library(stringr)
 # load table
 
 ## testing
-# table <- '~/uranos_home/workspace/2024-BCMA-CAR-Koeln/gviz/Polycomb-Associated_Non-Coding_RNAs'
+# table <- 'Polycomb-Associated_Non-Coding_RNAs'
 # transcrip <- 3
 # chr <- "chr20"
 # gene <- "ZGPAT_test"
@@ -103,8 +103,8 @@ myZoom <- function(table, transcrip, chr, flank1, flank2, label, gene, IS){
   dev.off()
 }
 
-myZoom('~/uranos_home/workspace/2024-BCMA-CAR-Koeln/gviz/KPNA4', 2, "chr3", 2, 3, "Exon", "KPNA4", 160535998)
-myZoom('~/uranos_home/workspace/2024-BCMA-CAR-Koeln/gviz/ZGPAT', 10, "chr20", 2, 3, "Exon", "ZGPAT", 63719663) # why is there suddenly an error?
-myZoom('~/uranos_home/workspace/2024-BCMA-CAR-Koeln/gviz/Polycomb-Associated_Non-Coding_RNAs', 4, "chr19", 3, 4, "Exon", "MIDN", 1246860)
-myZoom('~/uranos_home/workspace/2024-BCMA-CAR-Koeln/gviz/Polycomb-Associated_Non-Coding_RNAs', 2, "chr19", 3, 4, "Exon", "lncRNA", 1246860)
-myZoom('~/uranos_home/workspace/2024-BCMA-CAR-Koeln/gviz/Polycomb-Associated_Non-Coding_RNAs', 2, "chr19", 3, 4, "Exon", "Polycomb-Associated_Non-Coding_RNAs", 1246860)
+myZoom('KPNA4', 2, "chr3", 2, 3, "Exon", "KPNA4", 160535998)
+myZoom('ZGPAT', 10, "chr20", 2, 3, "Exon", "ZGPAT", 63719663) # why is there suddenly an error?
+myZoom('Polycomb-Associated_Non-Coding_RNAs', 4, "chr19", 3, 4, "Exon", "MIDN", 1246860)
+myZoom('Polycomb-Associated_Non-Coding_RNAs', 2, "chr19", 3, 4, "Exon", "lncRNA", 1246860)
+myZoom('Polycomb-Associated_Non-Coding_RNAs', 2, "chr19", 3, 4, "Exon", "Polycomb-Associated_Non-Coding_RNAs", 1246860)
