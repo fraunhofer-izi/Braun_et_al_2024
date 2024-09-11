@@ -1,0 +1,4 @@
+#!/bin/bash
+
+ls > list
+grep 'bam$' list > bam_list
