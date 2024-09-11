@@ -13,8 +13,8 @@
 
 ml STAR
 
-OLDFASTQ="./data/*fastq" #first-run S2
-NEWFASTQ="./data/*fastq" #re-sequenced S2
+OLDFASTQ="./data/*fastq" #first-run S2 PB_CARpos_CD5dim
+NEWFASTQ="./data/*fastq" #re-sequenced S2 PB_CARpos_CD5dim
 INDEX="STAR_index_Carvykti/"
 
 STAR --runMode alignReads \

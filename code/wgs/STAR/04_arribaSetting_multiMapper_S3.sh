@@ -13,8 +13,8 @@
 
 ml STAR
 
-OLDFASTQ="/mnt/rawdata/Illumina/NextSeq/240712_VH00421_52_2223HWLNX_KEEP/"
-NEWFASTQ="/mnt/rawdata/Illumina/NextSeq/240812_VH00421_56_AACMC2GHV_KEEP/"
+OLDFASTQ="./data/*fastq" #first-run S3 PB_CARpos_CD5pos
+NEWFASTQ="./data/*fastq" #re-sequenced S3 PB_CARpos_CD5pos
 INDEX="STAR_index_Carvykti/"
 
 STAR --runMode alignReads \
