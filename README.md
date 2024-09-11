@@ -1,6 +1,6 @@
-# Case Report: Cilta induced T-LGLL like phenotype
+# Case Report: T-Large Granular Lymphocyte-like Leukemia Following CAR T-Cell Therapy
 
-This repository contains code used to produce the results in: Till Braun, Michael Rade et al. T-Large Granular Lymphocyte-like Leukemia Following CAR T-Cell Therapy ...
+This repository contains code used to produce the results in: Till Braun, Michael Rade, Maximilian Merz et al. T-Large Granular Lymphocyte-like Leukemia Following CAR T-Cell Therapy  ...
 
 ## Singularity
 
