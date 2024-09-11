@@ -1,0 +1,7 @@
+sample,fastq_1,fastq_2
+CARposCD5dim,path_to_fastq/PB_CARpos_CD5dim_S2_R1_001.fastq.gz,path_to_fastq/PB_CARpos_CD5dim_S2_R2_001.fastq.gz
+CARposCD5dim,path_to_fastq/P2251_CARpos_CD5dim_S1_R1_001.fastq.gz,path_to_fastq/P2251_CARpos_CD5dim_S1_R2_001.fastq.gz
+CARposCD5pos,path_to_fastq/PB_CARpos_CD5pos_S3_R1_001.fastq.gz,path_to_fastq/PB_CARpos_CD5pos_S3_R2_001.fastq.gz
+CARposCD5pos,path_to_fastq/PB_CARpos_CD5pos_S2_R1_001.fastq.gz,path_to_fastq/PB_CARpos_CD5pos_S2_R2_001.fastq.gz
+CARnegCD5pos,path_to_fastq/PB_CAR-_CD5pos_S4_R1_001.fastq.gz,path_to_fastq/PB_CAR-_CD5pos_S4_R2_001.fastq.gz
+CARnegCD5pos,path_to_fastq/PB_CARneg_CD5pos_S3_R1_001.fastq.gz,path_to_fastq/PB_CARneg_CD5pos_S3_R2_001.fastq.gz
