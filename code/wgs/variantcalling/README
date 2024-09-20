@@ -1,0 +1,41 @@
+This is the variant calling pipeline that we used. We use nf-core/sarek with specific parameter settings tailored to our need and 
+then filter and combine the variant calling output with samtools, bcftools an R (vcfR + tidyverse).
+
+# Steps
+
+## 1: Set up igenomes cache and create reference with included Carvykti sequence 
+Note: this is not strictly necessary but the way we did it. Adding the vector sequence into the reference helps the aligner like decoy sequences do, so that it does not have to try hard to map all the construct reads somewhere else in the genome. This pipeline does not call variants on the vector sequence itself, although manta will report breakspoints for "chromosomal rearrangement" that include the carvykti sequence, which is really just our insertion sites again.
+- see: https://ewels.github.io/AWS-iGenomes/ download with settings "Homo sapiens | GATK | GRCh38 | GATK" to a location of your choosing
+We just concatenated the vector sequence to the included hg38 genome fasta, added an appropriate region to all .bed files and regenerated the indices, that's it. But you can:
+- move the "Homo_sapiens_plus_Carvykti/" subfolder from this repo to the appropriate location in your iGenomes cache
+The cache should look like this in the end:
+path/to/igenomes/|Homo_sapiens/GATK/GRCh38/...
+                 |Homo_sapiens_plus_Carvykti/GATK/GRCh38/...
+
+Note2: We don't actually set up Homo_sapiens_plus_Carvykti as the resource but only splice in the changed file via parameters to the pipeline. This way we keep all the default parameters from the "GATK.GRCh38" genome intact.
+
+You may also download the vep cache as described here: https://nf-co.re/sarek/3.4.3/docs/usage#only-download-cache
+If you do: change paths accordingly in all .sh files (steps 2 and 4)-- if you don't: delete all "--vep_cache /path/to/cache/" lines everywhere. Caching should not change the results, only avoid unnecessary downloads.
+
+## 2: Run variant calling with dragmap and bwa-mem2 aligners
+
+- go into the pipeline_runs/ subfolder
+- make sure that nextflow is installed on your system and preferentially Singularity (that is what we used)
+- review the file custom.config, changing the path used by dragmap for the alt-masking file to a valid path (the files are available here, use hg38 when running out pipeline: https://github.com/Illumina/DRAGMAP/tree/master/fasta_mask)
+- review the file samplesheet_plus_reseq.csv, changing all .fastq paths to paths on your system (after downloading our raw data, naturally)
+- review run_initial_dragmap.sh and run_initial_bwamem2.sh: 
+  - insert your path to the cache(s) from step 1 where necessary
+  - change the loading of nextflow and singularity at the top of the files to something appropriate for your computing setup (HPC module system or local system or delete if not necessary for your setup)
+- run both scripts. This should run through but may require additional nextflow parameters appropriate for your system (e.g. if you need to submit to a specific slurm queue or the like. See https://nf-co.re/sarek/3.4.4/docs/usage#custom-configuration and the rest of the sarek documentation if necessary. You can add your parameters to custom.config if required)
+  - if the pipelines stop for some reason and you fixed the issue, just run the script again, the "-resume" flag is set in the scripts
+  - verify that subfolders initial_dragmap/ and initial_bwamem2/ were created and contain the expected results
+
+Note: when we initially looked at the data we ran with an additional "--save_mapped" parameter set, which you can also add if you want to have a look at the mappings themselves (although the duplicate-marked crams are output in any case and they should be sufficient for practically everything)
+
+## 3: Combine results from initial calling 
+
+- go to the parent folder above pipeline_runs/ again
+- review the file prefilter_variant_calls_initial.sh:
+  - change the loading of bcftools at the top of the files to something appropriate for your computing setup (HPC module system or local system or delete if not necessary for your setup)
+  - verify that all defined paths are still correct regarding your folder structure
+- run prefilter_variant_calls_initial.sh
