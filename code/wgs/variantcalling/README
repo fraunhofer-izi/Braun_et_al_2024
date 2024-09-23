@@ -39,3 +39,22 @@ Note: when we initially looked at the data we ran with an additional "--save_map
   - change the loading of bcftools at the top of the files to something appropriate for your computing setup (HPC module system or local system or delete if not necessary for your setup)
   - verify that all defined paths are still correct regarding your folder structure
 - run prefilter_variant_calls_initial.sh
+- review R_reports/combine_initial_results_for_force_calling.R and check that paths are correct and you have all necessary packages installed
+- run combine_initial_results_for_force_calling.R which should generate a "merged_forced_alleles.vcf.gz" file containing all variants of interest for force-calling
+
+## 4: Run variant calling with force-call input and mutect2 in joint-calling mode
+
+- go into the pipeline_runs/ subfolder
+- review the file forcecall_custom.config:
+  - insert real paths where missing (once in the withName: 'MUTECT2_PAIRED' section)
+  - apply the same changes you made to custom.config if necessary and applicable
+- review run_forcecalling_dragmap.sh:
+  - as in step 2, insert proper paths and cache dir locations
+- as in step 2: run the script, which should index and then use your "merged_forced_alleles.vcf.gz" file and give you a forcecall_dragmap/ folder with results for the joint calling on all samples
+
+Note: You can also run additional steps from the sarek pipeline here. We run ascat and msisensorpro in our script but you could add more.
+
+## 5: Combine results from final calling
+
+- go back into the base folder (as in step 3)
+- review 
