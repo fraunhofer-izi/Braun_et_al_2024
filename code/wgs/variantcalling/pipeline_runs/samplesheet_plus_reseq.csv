@@ -1,0 +1,10 @@
+patient,sex,status,sample,lane,fastq_1,fastq_2
+Koeln_1,XY,0,Apherese_CARneg_CD5pos,run_1,/path/to/Apherese_CAR-_CD5pos_S1_R1_001.fastq.gz,/path/to/Apherese_CAR-_CD5pos_S1_R2_001.fastq.gz
+Koeln_1,XY,1,PB_CARpos_CD5dim_merged,run_1,/path/to/PB_CARpos_CD5dim_S2_R1_001.fastq.gz,/path/to/PB_CARpos_CD5dim_S2_R2_001.fastq.gz
+Koeln_1,XY,1,PB_CARpos_CD5dim_merged,run_2,/path/to/P2251_CARpos_CD5dim_S1_R1_001.fastq.gz,/path/to/P2251_CARpos_CD5dim_S1_R2_001.fastq.gz
+Koeln_1,XY,1,PB_CARpos_CD5dim,run_1,/path/to/PB_CARpos_CD5dim_S2_R1_001.fastq.gz,/path/to/PB_CARpos_CD5dim_S2_R2_001.fastq.gz
+Koeln_1,XY,1,P2251_CARpos_CD5dim,run_2,/path/to/P2251_CARpos_CD5dim_S1_R1_001.fastq.gz,/path/to/P2251_CARpos_CD5dim_S1_R2_001.fastq.gz
+Koeln_1,XY,1,PB_CARpos_CD5pos_merged,run_1,/path/to/PB_CARpos_CD5pos_S3_R1_001.fastq.gz,/path/to/PB_CARpos_CD5pos_S3_R2_001.fastq.gz
+Koeln_1,XY,1,PB_CARpos_CD5pos_merged,run_2,/path/to/PB_CARpos_CD5pos_S2_R1_001.fastq.gz,/path/to/PB_CARpos_CD5pos_S2_R2_001.fastq.gz
+Koeln_1,XY,1,PB_CARneg_CD5pos_merged,run_1,/path/to/PB_CAR-_CD5pos_S4_R1_001.fastq.gz,/path/to/PB_CAR-_CD5pos_S4_R2_001.fastq.gz
+Koeln_1,XY,1,PB_CARneg_CD5pos_merged,run_2,/path/to/PB_CARneg_CD5pos_S3_R1_001.fastq.gz,/path/to/PB_CARneg_CD5pos_S3_R2_001.fastq.gz

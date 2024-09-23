@@ -1,9 +1,10 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Colors
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-.inst = c("ggthemes", "scales") %in% installed.packages()
+.new_cran_packages = c("ggthemes", "scales")
+.inst = .new_cran_packages %in% installed.packages()
 if (any(!.inst)) {
-  install.packages(.cran_packages[!.inst], repos = "http://cran.rstudio.com/")
+  install.packages(.new_cran_packages[!.inst], repos = "http://cran.rstudio.com/")
 }
 
 colorblind_vector <- colorRampPalette(c("#FF4B20", "#FFB433", "#C6FDEC", "#7AC5FF", "#0348A6"))
