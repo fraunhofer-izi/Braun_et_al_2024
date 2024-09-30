@@ -4,10 +4,15 @@ then filter and combine the variant calling output with samtools, bcftools an R 
 # Steps
 
 ## 1: Set up igenomes cache and create reference with included Carvykti sequence 
-Note: this is not strictly necessary but the way we did it. Adding the vector sequence into the reference helps the aligner like decoy sequences do, so that it does not have to try hard to map all the construct reads somewhere else in the genome. This pipeline does not call variants on the vector sequence itself, although manta will report breakspoints for "chromosomal rearrangement" that include the carvykti sequence, which is really just our insertion sites again.
+Note: this is not strictly necessary but the way we did it. Adding the vector sequence into the reference helps the aligner like decoy sequences do, 
+so that it does not have to try hard to map all the construct reads somewhere else in the genome. This pipeline does not call variants on the vector sequence itself, 
+although manta will report breakspoints for "chromosomal rearrangement" that include the carvykti sequence, which is really just our insertion sites again.
+Downloading the iGenomes reference avoids repeated downloads of the same stuff and is nicer for your network and the group that is nice enough to publicly host the reference.
+
 - see: https://ewels.github.io/AWS-iGenomes/ download with settings "Homo sapiens | GATK | GRCh38 | GATK" to a location of your choosing
-We just concatenated the vector sequence to the included hg38 genome fasta, added an appropriate region to all .bed files and regenerated the indices, that's it. But you can:
-- move the "Homo_sapiens_plus_Carvykti/" subfolder from this repo to the appropriate location in your iGenomes cache
+
+For our extended reference, we added a Homo_sapiens_plus_Carvykti folder to the downloaded iGenomes cache that holds all changed files.
+Briefly, we concatenated the vector sequence to the included hg38 genome fasta, added an appropriate region to all .bed files and regenerated the indices, that's it. 
 The cache should look like this in the end:
 path/to/igenomes/|Homo_sapiens/GATK/GRCh38/...
                  |Homo_sapiens_plus_Carvykti/GATK/GRCh38/...
@@ -57,4 +62,15 @@ Note: You can also run additional steps from the sarek pipeline here. We run asc
 ## 5: Combine results from final calling
 
 - go back into the base folder (as in step 3)
-- review 
+- review prefilter_variant_calls_force.sh in the same way as done in step 3
+- run prefilter_variant_calls_force.sh
+
+## 6: Run R scripts for postprocessing and plots
+
+- go to the R_reports/ folder
+- as in step 3, review filter_forced_calls.R and check that paths are matching your path structure and you have all necessary packages installed
+- run filter_forced_calls.R, which should populate the R_reports/Final_Outputs/ subfolder with variant calling outputs suitable for the plotting scripts (and potentially further analyses)
+
+Note: the results files in R_reports/Final_Outputs/ that are small enough for synchronization should already be included with this repo and can be used for plotting and checking against your results
+The files exempt from synchronization are final.df.unfiltered.rds (vcfR converted raw results from the second stage of calling (all samples jointly with forced calling input)) 
+and filtering.IDS.rds (variants called by each aligner/caller combination before and after filtering, could be used to create Venn diagrams for variant calling concordance)
