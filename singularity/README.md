@@ -2,18 +2,23 @@
 
 Image based on the Ubuntu 22.04 (R 4.3.2), see `./singularity/rstudio_server/recipe-4-3-2.def` for details
 
-First you need to clone this repo.
+### First step
 
-### First step (Option 1): Download the image file:
+You need to clone this repo. Go to:
+
+``` sh
+$ cd singularity/
+```
+
+### Second step (Option 1): Download the image file:
 
 https://zenodo.org/records/14251447
 
 Note: There you will also find all the R packages used for the single cell analyses.
 
-### First step (Option 2): create the singularity image yourself:
+### Second step (Option 2): create the singularity image yourself:
 
 ``` sh
-$ cd singularity/
 $ sudo singularity build rstudio-server.sif recipe-4-3-2.def
 ```
 
@@ -33,7 +38,6 @@ Furthermore, set your R library path in `./singularity/rsession.conf`. I recomme
 Now run the following :
 
 ``` sh
-$ cd singularity/
 $ bash run.sh run rstudio-rstudio.sif
 ```
 
