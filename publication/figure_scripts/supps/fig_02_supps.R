@@ -667,7 +667,7 @@ ggsave2(
 thresh = 0.05
 
 # Clone 1_3
-infercnv_c1_3 <- readRDS("./analysis/multi_omics/inferCNV/infercnv_obj_Cl_1_3.rds")
+infercnv_c1_3 <- readRDS("data/inferCNV/infercnv_obj_Cl_1_3.rds")
 
 exprs.complete = infercnv_c1_3@expr.data
 exprs.complete[exprs.complete>(1+thresh)] <- 2
@@ -678,7 +678,7 @@ gain_perc_1_3 = apply(exprs.complete,1,function(x){sum(x==1)/length(x)})
 loss_perc_1_3 = apply(exprs.complete,1,function(x){sum(x==-1)/length(x)})
 
 # Clone 2
-infercnv_c2 <- readRDS("./analysis/multi_omics/inferCNV/infercnv_obj_Cl_2.rds")
+infercnv_c2 <- readRDS("data/inferCNV/infercnv_obj_Cl_2.rds")
 exprs.complete = infercnv_c2@expr.data
 exprs.complete[exprs.complete>(1+thresh)] <- 2
 exprs.complete[exprs.complete<(1-thresh)] <- 0
@@ -688,7 +688,7 @@ gain_perc_2 = apply(exprs.complete,1,function(x){sum(x==1)/length(x)})
 loss_perc_2 = apply(exprs.complete,1,function(x){sum(x==-1)/length(x)})
 
 # Other Clones
-infercnv_Cl_Other <- readRDS("./analysis/multi_omics/inferCNV/infercnv_obj_Cl_Other.rds")
+infercnv_Cl_Other <- readRDS("data/inferCNV/infercnv_obj_Cl_Other.rds")
 exprs.complete = infercnv_Cl_Other@expr.data
 exprs.complete[exprs.complete>(1+thresh)] <- 2
 exprs.complete[exprs.complete<(1-thresh)] <- 0
@@ -714,7 +714,7 @@ plot_cnv(infercnv_Cl_Other,title = "Other clones",png_res=400,cluster_references
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Copy-number plot chr 6
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-infercnv_c1_3 <- readRDS("data/infercnv_obj_Cl_1_3.rds")
+infercnv_c1_3 <- readRDS("data/inferCNV/infercnv_obj_Cl_1_3.rds")
 thresh = 0.05
 
 exprs.complete = infercnv_c1_3@expr.data
