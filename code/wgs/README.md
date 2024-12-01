@@ -1,9 +1,9 @@
 
-# Workflow for the whole genome sequencing (WGS) data including variant calling, reverse engineering of the cilta-cel vector sequence, and STAR alignment for integration site analysis.
+## Workflow for the whole genome sequencing (WGS) data including variant calling, reverse engineering of the cilta-cel vector sequence, and STAR alignment for integration site analysis.
 
-<img src="workflow.png" align="center" height="300"/>
+<img src="workflow.png" align="center" height="1000"/>
 
-# STAR = Detection of candidates for integration loci of cilta-cel  
+## STAR = Detection of candidates for integration loci of cilta-cel  
 * use parameters from arriba to find chimeric reads
 * enable mutlti mappers in order to not exlude LTR regions
 * do not filter secondary reads in IGV
@@ -21,7 +21,7 @@ Steps:
 * generate custom reference with cilta-cel -> ./data/
 * Perform steps 01_ till 07_ 
 
-# viralintegration_EBV = Investigation of Epstein-Barr-Virus (EBV) integration 
+## viralintegration_EBV = Investigation of Epstein-Barr-Virus (EBV) integration 
 * viralintegration pipeline used (nf-core Pipeline 'viralintegration' https://nf-co.re/viralintegration/0.1.1/docs/output/) for detection of EBV to exclude EBV as the cause for tumorigenesis
 
 Steps:
