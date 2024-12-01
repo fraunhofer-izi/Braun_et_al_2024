@@ -2,10 +2,10 @@
   "yaml", "ggplot2","reshape2", "dplyr", "naturalsort", "devtools", "scales",
   "stringr", "Seurat", "tibble", "tidyr", "forcats", "scCustomize",
   "rlang", "remotes", "patchwork", "cowplot", "ggrepel", "scico",
-  "ggpubr", "circlize", "gridtext", "data.table"
+  "ggpubr", "circlize", "gridtext", "data.table", "msigdbr"
 )
 .bioc_packages = c(
-  "simplifyEnrichment", "ComplexHeatmap", "org.Hs.eg.db", "clusterProfiler"
+  "simplifyEnrichment", "ComplexHeatmap", "clusterProfiler", "fgsea"
 )
 
 # Install CRAN packages (if not already installed)
@@ -401,7 +401,8 @@ ora_barpl = function(
       panel.grid.major.x = element_blank(),
       plot.title = element_text(hjust = 0.5, face = "plain", size = rel(1)),
       axis.text.x = element_text(size = rel(1)),
-      legend.position = "right"
+      legend.position = "right",
+      legend.ticks.length = unit(0.05, 'cm')
     ) +
     guides(
       fill = guide_colorbar(

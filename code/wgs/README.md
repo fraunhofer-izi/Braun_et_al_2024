@@ -1,3 +1,8 @@
+
+# Workflow for the whole genome sequencing (WGS) data including variant calling, reverse engineering of the cilta-cel vector sequence, and STAR alignment for integration site analysis.
+
+<img src="workflow.png" align="center" height="300"/>
+
 # STAR = Detection of candidates for integration loci of cilta-cel  
 * use parameters from arriba to find chimeric reads
 * enable mutlti mappers in order to not exlude LTR regions

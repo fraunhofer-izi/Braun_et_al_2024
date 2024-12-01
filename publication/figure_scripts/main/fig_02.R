@@ -5,7 +5,7 @@
   "tidyverse", "scCustomize", "ggh4x", "ggrepel", "anndata", "scico", "semla",
   "ggalluvial", "ggfittext"
 )
-.bioc_packages = c("dittoSeq", "scRepertoire", "muscat", "DESeq2", "edgeR", "UCell","GenVisR")
+.bioc_packages = c("dittoSeq", "scRepertoire", "UCell","GenVisR")
 
 # Install CRAN packages (if not already installed)
 .inst = .cran_packages %in% installed.packages()
@@ -32,35 +32,19 @@ for (pack in list.of.packages) {
   ))
 }
 
-if (any(!"SeuratWrappers" %in% installed.packages())) {
-  remotes::install_github('satijalab/seurat-wrappers')
+if (any(!"semla" %in% installed.packages())) {
+  Sys.unsetenv("GITHUB_PAT")
+  remotes::install_github("ludvigla/semla")
 }
-library(SeuratWrappers)
-
-if (any(!"SeuratData" %in% installed.packages())) {
-  devtools::install_github('satijalab/seurat-data')
-}
-library(SeuratData)
-
-if (any(!"ProjecTILs" %in% installed.packages())) {
-  remotes::install_github("carmonalab/ProjecTILs")
-}
-library(ProjecTILs)
-
-if (any(!"SeuratDisk" %in% installed.packages())) {
-  remotes::install_github("mojaveazure/seurat-disk")
-}
-library(SeuratDisk)
+library(semla)
 
 source("code/helper/styles.R")
 source("code/helper/functions_plots.R")
 source("code/helper/functions.R")
 source("code/helper/ora.R")
-source("code/helper/adt_rna_gene_mapping.R")
 
 theme_set(mytheme(base_size = 8))
 base.size = 8
-
 
 leg.text.l = -2.5
 
@@ -230,7 +214,7 @@ car.reduc..pl =
   scattermore::geom_scattermore(pointsize = 7, color="black")+
   scattermore::geom_scattermore(pointsize = 6, color="white") +
   scattermore::geom_scattermore(pointsize = 3) +
-#  geom_point()
+  #  geom_point()
   theme(
     legend.position = "none",
     legend.margin = margin(l = 1),
@@ -264,10 +248,10 @@ car.comp.pl =
   ggplot(df,  aes(grouping, count, fill = label)) +
   geom_col(aes(fill = label), position = "fill", width = .9) +
   facet_grid(~ celltype_short_3, scales="free", space = "free") +
-    scale_fill_manual(
-      values = c("#4477AA", "#DDDDDD"), breaks = c("TRUE", "FALSE"),
-      na.value = "#FFFFFF"
-    ) +
+  scale_fill_manual(
+    values = c("#4477AA", "#DDDDDD"), breaks = c("TRUE", "FALSE"),
+    na.value = "#FFFFFF"
+  ) +
   theme(
     legend.position = "right",
     axis.title.x = element_blank(),
@@ -345,12 +329,6 @@ cl.comp.pl =
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Top Clonotypes
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-# pd = se.meta.t@meta.data
-# pd = prop.table(table(pd$orig.ident, pd$TopClones_2), margin = 1)
-# pd = round(pd, 2)
-# rownames(pd) = se.meta$SAMPLE[match(rownames(pd), se.meta$orig.ident)]
-
-
 cl.c = c(
   "#004488", "#DDAA33", "#5AB2FF",
   # "#004488", "#DDAA33", "#BB5566",
@@ -372,8 +350,8 @@ con.df$Sample = factor(con.df$Sample, levels = names(sample.lbls))
 
 top.clones.pl =
   ggplot(con.df, aes(
-  x = Sample, fill = clones, group = clones,  stratum = clones,
-  alluvium = clones, y = Proportion,  label = clones)
+    x = Sample, fill = clones, group = clones,  stratum = clones,
+    alluvium = clones, y = Proportion,  label = clones)
   ) +
   scale_fill_manual(values = cl.c) +
   theme(
@@ -431,7 +409,6 @@ df = cbind(exp_mat, PERC = percent_mat$PERC)
 df$FTR = factor(df$FTR, levels = ftrs)
 df$GROUP = factor(df$GROUP, levels = (naturalsort(unique(df$GROUP))))
 
-# df$AVE[df$AVE > quantile(df$AVE, .99)] = quantile(df$AVE, .99)
 p = scico(palette = "hawaii", n = 10, direction = -1)
 top.clones.cd4cd8.pl =
   ggplot(df, aes(FTR, GROUP, fill = AVE, size = PERC * 100)) +
@@ -442,54 +419,25 @@ top.clones.cd4cd8.pl =
     legend.position = "bottom",
     axis.text.x = element_text(angle=45, hjust=1, vjust = 1.05, size = rel(.8)),
     axis.text.y = element_text(size = rel(.8)),
-    legend.text = element_text(margin = margin(l = -5, unit = "pt"), size = rel(1)),
-    legend.title  = element_text(margin = margin(r = 1, l = 5, unit = "pt")),
+    # legend.text = element_text(margin = margin(l = 0, unit = "pt"), size = rel(1)),
+    legend.title  = element_text(margin = margin(r = 5, l = 5, unit = "pt")),
     legend.margin = margin(t = -3, r = 40, l = -40),
-    plot.title = element_text(hjust = 0.5, face = "plain")
+    plot.title = element_text(hjust = 0.5, face = "plain"),
+    legend.ticks.length = unit(0.05, 'cm')
+
   ) +
   scale_fill_gradientn(colors = c(p, rep(p[length(p)], 5))) +
   # scale_fill_scico(palette = "hawaii", direction = -1) +
   guides(
     fill = guide_colorbar(
-      title = "Average\nExpr.", order = 1,
-      title.hjust = 0, title.vjust = 1.4, barwidth = unit(4, 'lines'),
+      title = "Average\nExpression", order = 1,
+      title.hjust = 0, title.vjust = .56, barwidth = unit(4, 'lines'),
       barheight = unit(.4, 'lines'), ticks.linewidth = 1.5/.pt
     ),
     size = guide_legend(title = "Percent\nExpressed")
   ) +
   xlab(NULL) + ylab(NULL) +
-    coord_flip()
-
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-# Gene set enrichment for most abundant clonotypes
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-mir = readRDS("data/metadata/signatures/mir_gene_set_collection.Rds")
-# unique(mir$TermID)
-
-cust.gene.sets = mir[grepl("CD8", mir$TermID), ]
-cust.gene.sets = cust.gene.sets[!grepl("Cytopus", cust.gene.sets$TermID), ]
-cust.gene.sets$TermID = gsub("CD8-", "", cust.gene.sets$TermID)
-cust.gene.sets$TermID = gsub(" .+", "", cust.gene.sets$TermID)
-cust.gene.sets = split(cust.gene.sets, cust.gene.sets$TermID)
-cust.gene.sets = lapply(cust.gene.sets, function(x){x$GeneID})
-
-se.cl = subset(se.meta.t, TopClones_2 != "Cl_Other")
-se.cl = subset(se.cl, orig.ident != "P2248" & orig.ident != "AphNB")
-se.cl = ucell_enrich(se.w = se.cl, cust.gene.sets)
-
-# DefaultAssay(se.cl) = "custom_UCell_score"
-# g.s.redu = dimreduc_features(
-#   se.cl, rownames(se.cl), .reduc = "umap", .quantile.fltr = T, .title.size = 1, pl.points = T, pt.size = .2,
-#   .assay = "custom_UCell_score", .na_cutoff = 0.1, plot.grid = F, #legend.size = 6,
-#   .x.title = NULL, .y.title = NULL, base.size = 8, legend.wh = c(.6, 5)
-# )
-# DefaultAssay(se.cl) = "RNA"
-# plot_grid(plotlist = g.s.redu, ncol = 3, scale = .98)
-# DimPlot_scCustom(se.cl, group.by = "TopClones_2")
-# DimPlot_scCustom(se.cl, group.by = "orig.ident")
-
-# Alle Scores <.1 werden auf 0 gesetzt -> Methods !!!
-enrich.cl.hm = enrich_heatmap(se.w = se.cl)
+  coord_flip()
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # DGEA | Clone_1_3 vs Clone 2
@@ -510,18 +458,18 @@ table(res.pb.sign$cluster)
 
 dot.clono.de =
   de_tops_bubble(
-  df = res.pb.sign[!grepl("^TRA|^TRB", res.pb.sign$feature), ],
-  se.obj = se.work,
-  ctrst.lvl = c("Cl_2", "Cl_1_3"),
-  pl.title = paste0(
-    "Clone 1_3 vs. Clone 2 (up: ",
-    table(res.pb.sign$avg_log2FC > 0)[2],
-    ", down: ",
-    table(res.pb.sign$avg_log2FC > 0)[1],
-    ")"
-  ),
-  ctrst = "TopClones_2"
-)
+    df = res.pb.sign[!grepl("^TRA|^TRB", res.pb.sign$feature), ],
+    se.obj = se.work,
+    ctrst.lvl = c("Cl_2", "Cl_1_3"),
+    pl.title = paste0(
+      "Clone 1_3 vs. Clone 2 (up: ",
+      table(res.pb.sign$avg_log2FC > 0)[2],
+      ", down: ",
+      table(res.pb.sign$avg_log2FC > 0)[1],
+      ")"
+    ),
+    ctrst = "TopClones_2"
+  )
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # ORA | Clone_1_3 vs Clone 2
@@ -545,8 +493,15 @@ ora.go = parallel::mclapply(ftrs.l, function(x){
   )
 }, mc.cores = length(ftrs.l))
 
+# Redundant term (most gene overlap)
+ora.go[[1]] = ora.go[[1]][!ora.go[[1]]$pathway %in%
+                            c(
+                              "GOBP_ANTIGEN_PROCESSING_AND_PRESENTATION_OF_EXOGENOUS_PEPTIDE_ANTIGEN_VIA_MHC_CLASS_II" ,
+                              "GOBP_ANTIGEN_PROCESSING_AND_PRESENTATION_OF_PEPTIDE_OR_POLYSACCHARIDE_ANTIGEN_VIA_MHC_CLASS_II"
+                            ), ]
+
 ora.clono =
-ora_barpl(
+  ora_barpl(
     gsea.res = ora.go,
     ftrs.list = ftrs.l,
     nbr.tops = 10,
@@ -559,8 +514,8 @@ ora_barpl(
     barheight = unit(4, 'lines'),
     bar.width = .8
   ) +
-    ggtitle("Cl 1_3 vs. Cl 2") +
-  theme(axis.text.x = element_text(size = rel(.8)))
+  ggtitle("Cl 1_3 vs. Cl 2") +
+  theme(axis.text.x = element_text(size = rel(1)))
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Spatial
@@ -603,7 +558,8 @@ leg.1 = get_legend(
       barheight = .4, ticks.linewidth = 1.5/.pt
     )
   ) + theme(
-    legend.title = element_text(margin = margin(r = 10, unit = "pt")),
+    legend.title = element_text(margin = margin(r = 3, unit = "pt")),
+    legend.ticks.length = unit(0.05, 'cm')
   )
 )
 ftr.l = lapply(ftr.l, function(x){
@@ -631,113 +587,14 @@ leg.2 = get_legend(
       barheight = .4, ticks.linewidth = 1.5/.pt
     )
   ) + theme(
-    legend.title = element_text(margin = margin(r = 10, unit = "pt")),
+    legend.title = element_text(margin = margin(r = 3, unit = "pt")),
+    legend.ticks.length = unit(0.05, 'cm')
   )
 )
 ftr.l = lapply(ftr.l, function(x){
   x = x + theme(legend.position='none')
 })
 ftr.l.2 = ftr.l
-
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-# Copy-number plot chr 6
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-infercnv_c1_3 <- readRDS("data/infercnv_obj_Cl_1_3.rds")
-thresh = 0.05
-
-exprs.complete = infercnv_c1_3@expr.data
-exprs.complete[exprs.complete>(1+thresh)] <- 2
-exprs.complete[exprs.complete<(1-thresh)] <- 0
-exprs.complete[exprs.complete>=(1-thresh) & exprs.complete<=(1+thresh)] <- 1
-exprs.complete = exprs.complete - 1
-gain_perc_1_3 = apply(exprs.complete,1,function(x){sum(x==1)/length(x)})
-loss_perc_1_3 = apply(exprs.complete,1,function(x){sum(x==-1)/length(x)})
-
-data <- cytoGeno[cytoGeno$genome == 'hg19',]
-i.pl <- ideoView(data, chromosome='chr6', txtSize=1.5) +
-  theme(
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(),
-    panel.border = element_blank(),
-    legend.position="none",
-    axis.title=element_text(size=8),
-    plot.margin = unit(c(0.2, 0.15, -.1, 0.35), "cm")
-  )
-
-df = data.frame(start=infercnv_c1_3@gene_order$start/1000000,
-                stop=infercnv_c1_3@gene_order$start/1000000,
-                chr= as.numeric(gsub(pattern = "chr","",infercnv_c1_3@gene_order$chr)),
-                gain=gain_perc_1_3,
-                del=-loss_perc_1_3)
-df = df[df$chr==6,]
-chr.pl <-
-  ggplot(data=df,aes(xmin=start,xmax=stop,ymin=del,ymax=0)) +
-  geom_rect(colour = "darkblue") +
-  geom_rect(aes(xmin=start,xmax=stop,ymin=0,ymax=gain),colour="darkred") +
-  xlim(0,max(data$chromEnd[data$chrom=="chr6"])/1000000) +
-  ylim(-.5, 1) +
-  xlab("position in mb")+
-  theme(axis.text = element_text(size=8),axis.title=element_text(size=8)) +
-  geom_hline(
-    yintercept=seq(-.8, 0.8, 0.2), linetype="dashed", color = "#999999AA",
-    linewidth = .2
-  )+
-  geom_hline(yintercept=c(0), color = "#000000AA", linewidth = .3)
-
-cnv.chr6.pl =
-  plot_grid(
-    plot_grid(i.pl),
-    plot_grid(chr.pl),
-    nrow=2, rel_heights = c(1.2, 2),
-    align = "hv"
-  )
-
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-# Copy-number bubble plots chr 6
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-se.meta.sel = subset(se.meta.t, subset = orig.ident == "AphNB" | TopClones_2 != "Cl_Other")
-label = se.meta.sel$TopClones_2
-label[label=="Cl_Other"] = "Aph"
-se.meta.sel = AddMetaData(
-  object = se.meta.sel,
-  metadata = label,
-  col.name = 'Label'
-)
-genes = rownames(infercnv_c1_3@gene_order)[gain_perc_1_3>=0.75]
-
-mat = GetMatrixFromSeuratByGroupMulti(
-  obj= se.meta.sel, features = genes,
-  CT_L1_COARSE, Label
-)
-exp_mat = reshape2::melt(mat$exp_mat)
-colnames(exp_mat) = c("FTR", "GROUP", "AVE")
-exp_mat$GROUP = gsub(".+\\|", "", exp_mat$GROUP)
-percent_mat = reshape2::melt(mat$percent_mat)
-df = cbind(exp_mat, PERC = percent_mat$value)
-df$FTR = factor(df$FTR, levels = genes)
-df$GROUP = factor(df$GROUP, levels = rev(c("Aph","Cl_2","Cl_1_3")))
-
-bubble.cnv.pl = ggplot(df, aes(FTR, GROUP, fill = AVE, size = PERC * 100)) +
-  geom_point(colour="black", pch=21, stroke = .2) +
-  scale_size(range = c(1, 3.5), breaks = c(10, 25, 50, floor(max(df$PERC) * 10) * 10)) +
-  mytheme() +
-  theme(
-    legend.position = "bottom",
-    axis.text.x = element_text(angle=45, hjust=1, vjust = 1, size = rel(.9)),
-    legend.text = element_text(margin = margin(l = -5, unit = "pt"), size = rel(1)),
-    legend.title  = element_text(margin = margin(r = -2, l = 10, unit = "pt")),
-    legend.margin = margin(t = -3),
-    plot.title = element_text(hjust = 0.5, face = "plain")
-  ) +
-  scale_fill_scico(palette = "bilbao", begin =  0, end = 1, direction = -1) +
-  guides(
-    fill = guide_colorbar(
-      title = "Average\nExpression", order = 1,
-      title.hjust = 0, title.vjust = .75, barwidth = unit(4, 'lines'),
-      barheight = unit(.4, 'lines'), ticks.linewidth = 1.5/.pt
-    ),
-    size = guide_legend(title = "Percent\nExpressed")
-  ) + xlab(NULL) + ylab(NULL)
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Final Plot
@@ -805,9 +662,8 @@ ggsave2(
         label_fontface = "bold", label_size = 10
       ),
       NULL,
-      enrich.cl.hm,
-      ncol = 5, rel_widths = c(1, .15, 1.9, .1, 1.36),
-      labels = c("E)", "", "", "", "J)"),
+      ncol = 4, rel_widths = c(.382, .075, .618, .0),
+      labels = c("E)", "", "", ""),
       label_fontface = "bold", label_size = 10
     ),
     NULL,
@@ -826,7 +682,7 @@ ggsave2(
         leg.2, nrow = 2, rel_heights = c(1, .125)
       ),
       ncol = 3, rel_widths = c(1.05, 0.1, 1),
-      labels = c("K)","","L)"),label_fontface = "bold", label_size = 10
+      labels = c("J)","","K)"),label_fontface = "bold", label_size = 10
     ),
     nrow = 5, rel_heights = c(.95, .05, .95, .05, .425)
   ),
@@ -835,6 +691,7 @@ ggsave2(
   dpi = 400,
   bg = "white",
   units = "mm",
-  scale = 1.6
+  scale = 1.6,
+  device = png, type = "cairo"
 )
 

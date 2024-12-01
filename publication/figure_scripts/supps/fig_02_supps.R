@@ -83,7 +83,7 @@ se.meta.cd8 = readRDS(paste0(manifest$multi_omics$work, "integration/seurat_harm
 
 se.meta.cd4$celltype = as.factor(gsub("_EOMES", "", se.meta.cd4$celltype))
 
-sample.lbls = setNames(c("AphNB", "P2248", "P2249", "P2264"), c("Aph", "BM", "PB", "PB+Dexa"))
+sample.lbls = setNames(c("AphNB", "P2248", "P2249", "P2264"), c("Aph", "BM-preDexa", "PB-preDexa", "PB-postDexa"))
 se.meta.t$SAMPLE = names(sample.lbls)[match(se.meta.t$orig.ident, sample.lbls)]
 
 se.meta.t$clonePseudoID = gsub("Clone", "Cl", se.meta.t$clonePseudoID)
@@ -128,7 +128,7 @@ t.ct.pl =
     legend.title = element_text(margin = margin(r = 3)),
     legend.spacing.y = unit(2, 'mm'),
     legend.key.size = unit(4, "mm"),
-    legend.text = element_text(margin = margin(l = -2.5, unit = "pt")),
+    #legend.text = element_text(margin = margin(l = -2.5, unit = "pt")),
     axis.title = element_blank(),
     axis.text = element_blank(),
     axis.ticks = element_blank(),
@@ -144,7 +144,7 @@ t.ct.pl =
 ggsave2(
   filename="publication/figures_tables/supps/fig_02_t_reduc_by_sample.png",
   t.ct.pl +
-    facet_wrap(~ orig.ident, nrow = 1) +
+    facet_wrap(~ SAMPLE, nrow = 1) +
     theme(
       panel.spacing = unit(1, "lines"),
       legend.position = "bottom"
@@ -251,7 +251,7 @@ a = FeaturePlot_scCustom(
 ) & mytheme() & theme(aspect.ratio = 1) &
   guides(
     color = guide_colorbar(
-      title = NULL, order = 1, barwidth = unit(.4, 'lines'),
+      title = "CLR", order = 1, barwidth = unit(.4, 'lines'),
       barheight = unit(4, 'lines'), ticks.linewidth = 1.5/.pt
     ),
     size = guide_legend(title = "Percent\nExpressed")
@@ -423,10 +423,30 @@ se.cl = ucell_enrich(se.w = se.cl, cust.gene.sets)
 # DimPlot_scCustom(se.cl, group.by = "TopClones_2")
 # DimPlot_scCustom(se.cl, group.by = "orig.ident")
 
-# Alle Scores <.1 werden auf 0 gesetzt -> Methods !!!
-enrich.cl.hm = enrich_heatmap(se.w = se.cl, meta.vars = c("TopClones_2", "SAMPLE"))
+
+enrich.cl.hm.a = enrich_heatmap(se.w = se.cl)
+enrich.cl.hm.b = enrich_heatmap(se.w = se.cl, meta.vars = c("TopClones_2", "SAMPLE"))
+
+# ggsave2(
+#   filename="publication/figures_tables/supps/fig_02_ucell.png",
+#   plot_grid(
+#     plot_grid(NULL, enrich.cl.hm.a, NULL, nrow = 1, rel_widths = c(.3, 1, .3)),
+#     NULL,
+#     plot_grid(NULL, enrich.cl.hm.b, NULL, nrow = 1, rel_widths = c(.3, 1, .3)),
+#     nrow = 3, rel_heights = c(1, .1, 1),
+#     labels = c("A)","","B)"),label_fontface = "bold", label_size = 10
+#   ),
+#   width = 180, height = 160, dpi = 200, bg = "white", units = "mm", scale = 1
+# )
+
 ggsave2(
-  filename="publication/figures_tables/supps/fig_02_ucell.png",
+  filename="publication/figures_tables/supps/fig_02_ucell_a.png",
+  plot_grid(NULL, enrich.cl.hm.a, NULL, nrow = 1, rel_widths = c(.4, 1, .4)),
+  width = 180, height = 100, dpi = 200, bg = "white", units = "mm", scale = 1
+)
+
+ggsave2(
+  filename="publication/figures_tables/supps/fig_02_ucell_b.png",
   plot_grid(NULL, enrich.cl.hm, NULL, nrow = 1, rel_widths = c(.4, 1, .4)),
   width = 180, height = 70, dpi = 200, bg = "white", units = "mm", scale = 1
 )

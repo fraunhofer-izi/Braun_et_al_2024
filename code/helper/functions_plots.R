@@ -989,10 +989,11 @@ de_tops_bubble = function(
     theme(
       legend.position = "bottom",
       axis.text.x = element_text(angle=45, hjust=1, vjust = 1, size = rel(.9)),
-      legend.text = element_text(margin = margin(l = -5, unit = "pt"), size = rel(1)),
+      # legend.text = element_text(margin = margin(l = -5, unit = "pt"), size = rel(1)),
       legend.title  = element_text(margin = margin(r = -2, l = 10, unit = "pt")),
       legend.margin = margin(t = -3),
-      plot.title = element_text(hjust = 0.5, face = "plain")
+      plot.title = element_text(hjust = 0.5, face = "plain"),
+      legend.ticks.length = unit(0.05, 'cm')
     ) +
     scale_fill_scico(palette = "bilbao", begin =  0, end = 1, direction = -1) +
     guides(

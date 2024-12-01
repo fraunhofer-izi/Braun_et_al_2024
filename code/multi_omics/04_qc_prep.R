@@ -3,9 +3,9 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 .cran_packages = c(
   "Seurat", "yaml", "dplyr", "stringr", "naturalsort", "data.table", "ggplot2",
-  "scales", "openxlsx", "cowplot", "scCustomize"
+  "scales", "cowplot"
 )
-.bioc_packages = c("dittoSeq", "clustifyr", "scds", "scDblFinder", "UCell")
+.bioc_packages = c("clustifyr", "scds", "UCell")
 
 # Install CRAN packages (if not already installed)
 .inst = .cran_packages %in% installed.packages()
@@ -31,21 +31,6 @@ for (pack in list.of.packages) {
     character.only = TRUE
   ))
 }
-
-if (any(!"Azimuth" %in% installed.packages())) {
-  remotes::install_github('satijalab/azimuth', ref = 'master')
-}
-library(Azimuth)
-
-if (any(!"Azimuth" %in% installed.packages())) {
-  devtools::install_github('satijalab/seurat-data')
-}
-library(SeuratData)
-
-if (any(!"SeuratDisk" %in% installed.packages())) {
-  remotes::install_github("mojaveazure/seurat-disk")
-}
-library(SeuratDisk)
 
 if (any(!"ProjecTILs" %in% installed.packages())) {
   Sys.unsetenv("GITHUB_PAT")
@@ -103,12 +88,12 @@ mt_cutoff = 15
 complx_cutoff = 0.8
 
 p1 = qc_vln_plot_cell(
-    se.meta, low_cutoff = nFeature_low_cutoff, high_cutoff = nFeature_high_cutoff,
-  )
+  se.meta, low_cutoff = nFeature_low_cutoff, high_cutoff = nFeature_high_cutoff,
+)
 p2 = qc_vln_plot_cell(
-    se.meta, .features = "nCount_RNA", plot_title = "UMIs per Cell",
-    y_axis_label = "UMIs", low_cutoff = nCount_low_cutoff, high_cutoff = nCount_high_cutoff,
-  )
+  se.meta, .features = "nCount_RNA", plot_title = "UMIs per Cell",
+  y_axis_label = "UMIs", low_cutoff = nCount_low_cutoff, high_cutoff = nCount_high_cutoff,
+)
 p3 = qc_vln_plot_cell(
   se.meta, .features = "Perc_of_mito_genes", plot_title = "Mito Gene % per Cell",
   y_axis_label = "% Mito Gene Counts", high_cutoff = mt_cutoff,
@@ -118,19 +103,19 @@ p4 = qc_vln_plot_cell(
   y_axis_label = "log10(Genes) / log10(UMIs)", high_cutoff = complx_cutoff
 )
 
-ggsave2(
-  filename="analysis/multi_omics_mir/figures/qc_pre_processing/stats_tech_per_cell.pdf",
-  plot = cowplot::plot_grid(
-    p1, p2, p3, p4, scale = .9, nrow = 1,
-    labels = "AUTO", label_fontface = "bold", label_size = 14
-  ),
-  width = 160,
-  height = 42,
-  dpi = 100,
-  bg = "white",
-  units = "mm",
-  scale = 2
-)
+# ggsave2(
+#   filename="analysis/multi_omics_mir/figures/qc_pre_processing/stats_tech_per_cell.pdf",
+#   plot = cowplot::plot_grid(
+#     p1, p2, p3, p4, scale = .9, nrow = 1,
+#     labels = "AUTO", label_fontface = "bold", label_size = 14
+#   ),
+#   width = 160,
+#   height = 42,
+#   dpi = 100,
+#   bg = "white",
+#   units = "mm",
+#   scale = 2
+# )
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Cell filtering
@@ -139,8 +124,8 @@ label_cells_rm = function(obj) {
   obj@meta.data = obj@meta.data %>% mutate(
     KEEP_CELL = case_when(
       (nFeature_RNA < nFeature_low_cutoff) | (nFeature_RNA > nFeature_high_cutoff) |
-      (nCount_RNA < nCount_low_cutoff) | (nCount_RNA > nCount_high_cutoff) |
-      (Perc_of_mito_genes > mt_cutoff)  | (log10GenesPerUMI < complx_cutoff) ~ FALSE,
+        (nCount_RNA < nCount_low_cutoff) | (nCount_RNA > nCount_high_cutoff) |
+        (Perc_of_mito_genes > mt_cutoff)  | (log10GenesPerUMI < complx_cutoff) ~ FALSE,
       TRUE ~ TRUE
     )
   )
@@ -225,12 +210,6 @@ estimate_cc = function(se){
         se = tmp
       }
 
-      # if(ncol(se) < 31) {
-      #   se = RunUMAP(se, reduction = "pca", dims = 1:20, seed.use = 1234, verbose = F)
-      # } else {
-      #   se = RunUMAP(se, reduction = "pca", dims = 1:20, seed.use = 1234, verbose = F)
-      # }
-
       quiet <- function(x) {
         sink(tempfile())
         on.exit(sink())
@@ -261,18 +240,6 @@ estimate_cc = function(se){
       se$CellCycle_Phase = pd.cc$CellCycle_Phase[match(rownames(se@meta.data), rownames(pd.cc))]
       se$CellCycle_Phase[is.na(se$CellCycle_Phase)] = "G1M"
       se$CellCycle_Phase = factor(se$CellCycle_Phase, levels = c("G1M", "S", "G2M"))
-
-      # (DimPlot_scCustom(se, reduction = "umap", group.by = "seurat_clusters", pt.size = 1) & mytheme() & theme(legend.position = "none") |
-      #   DimPlot_scCustom(se, reduction = "umap", group.by = "CellCycle", pt.size = 1) & mytheme() |
-      #   DimPlot_scCustom(se, reduction = "umap", group.by = "CellCycle_Phase", pt.size = 1) & mytheme() ) /
-      #   (
-      #   FeaturePlot_scCustom(
-      #     se,
-      #     reduction = "umap",
-      #     features = c("S.Score", "G2M.Score"),
-      #     pt.size = .5, na_cutoff = 0.1,
-      #     colors_use = rev(MetBrewer::met.brewer("Hokusai1",n=100))
-      #   ) & mytheme())
 
       res = se@meta.data %>% dplyr::select(CellCycle, CellCycle_Phase)
       res$barcode = rownames(res)
