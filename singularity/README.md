@@ -24,7 +24,7 @@ $ sudo singularity build rstudio-server.sif recipe-4-3-2.def
 
 Note: The image must be created in `singularity/`, as it includes the file  `singularity/rstudio_auth.sh`
 
-### Second step (config and run)
+### Third step (config and run)
 
 The following adjustments must be made in the `run.sh` file:
 
