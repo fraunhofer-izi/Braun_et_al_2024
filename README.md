@@ -9,14 +9,6 @@ All scripts for the single-cell Analysis were developed in a Singularity image w
 ## Reproduction
 
 ``` sh
-$ bash reproduce.sh
-```
-
-The script must be run in the base path (./) of this repository. Following the content of `reproduce.sh`:
-
-``` sh
-#!/bin/bash
-
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # scRNA-Seq, VDJ-Seq, ADT-Seq:
 # All analysis performed with the Singularity R studio image
@@ -39,9 +31,8 @@ Rscript code/publication/supps/fig_02_supps.R
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # WGS:
-# STAR and Samtools are required
-# https://nf-co.re/viralintegration/0.1.1/
-# https://nf-co.re/sarek/3.4.3/
+# STAR and Samtools are required. Following nf-core pipeline are used:
+# https://nf-co.re/viralintegration/0.1.1/ and https://nf-co.re/sarek/3.4.3/
 # see also code/wgs/
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -57,6 +48,9 @@ bash code/wgs/STAR/04_arribaSetting_multiMapper_S3.sh
 bash code/wgs/STAR/05_arribaSetting_multiMapper_S4.sh
 bash code/wgs/STAR/06_NH1_HI1_AS100_filter_placeholder.sh
 Rscript code/wgs/STAR/07_STAR_IS_candidates.R #generates figure S17
+
+# Main Figure 3a
+# see folder code/publication/main/gviz_Figure3A/
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # scRNA-seq mutation:
