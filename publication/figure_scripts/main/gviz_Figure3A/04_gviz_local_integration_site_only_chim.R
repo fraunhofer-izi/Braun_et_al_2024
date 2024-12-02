@@ -41,7 +41,7 @@ chim_coverage = 27
 chim_tick = 5
 coverage = 90
 all_tick = 25
-folder <- 'path_to_segemehl_realigned/vis_reads/combine_runs/'
+folder <- 'Braun_et_al_2024/data/vis_reads/combine_runs/'
 
 file_names <- read.table(paste0(c(folder,
                                   'bam_list'),
