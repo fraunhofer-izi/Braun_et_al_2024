@@ -1,0 +1,10 @@
+file_partial_name,description_of_included_reads
+Apherese_CARneg_CD5pos_insertion, reads mapping to insertion site of Apherese sample (CARnegCD5pos)
+PB_CARneg_CD5pos_insertion, reads mapping to insertion site of CARnegCD5pos sample after treatment
+PB_CARpos_CD5dim_insertion, reads mapping to insertion site of CARposCD5dim sample after treatment
+PB_CARpos_CD5pos_insertion, reads mapping to insertion site of CARposCD5pos sample after treatment
+*5k.bam, all reads mapped onto integration site and Cilta-cel construct with additional 5k genome regions in hg38 up- and downstream of the integration site 
+*unique.bam, only chimeric reads mapped onto integration site
+chr3, respective set of reads mapped to integration site in chromosome 3 
+chr19, respective set of reads mapped to integration site in chromosome 19
+chr20, respective set of reads mapped to integration site in chromosome 20
