@@ -1,0 +1,11 @@
+# project and workdata paths
+base:
+  workdata:  "<path to data>/"
+
+multi_omics:
+  fastq:  "<path to fastq>"
+  cellranger:  "<path to cellranger output>"
+  work:  "<path to data>/"
+
+spatial:
+  cellranger:  "<path to cellranger output>"
