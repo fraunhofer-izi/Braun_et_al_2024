@@ -1,6 +1,7 @@
 # Directory structure for 'data':
 
-## metadata
+## feature_reference.csv
+The feature reference CSV file declares antibody capture constructs and associated barcodes. This file is required to run CellRanger with the ADT data.
 
 ## variant calling
 
@@ -13,9 +14,9 @@ In the folder 'combine_runs' only subgroups of reads pertaining to the integrati
 'combine_runs' refers to the combination/merge of reads from the initial and re-sequencing runs to achieve a higher coverage.
 These BAM-files were used to generate main Figure 3A and the supplementary Figures S18-20 depicting the integration sites with read support in IGV.
 
-### file_description.csv
+#### vis_reads/file_description.csv
 A table with descriptions annotating the BAM files found in the folder 'combine_runs/'.
 The combination of listed keywords in the file names are associated with the biological sample population, loci of integration site (chromosome) and the range of reads contained in the BAM-files.
 
-### combine_runs/
+#### vis_reads/combine_runs/
 24 BAM-files of each biological samples separated by chromosome and range of reads.
