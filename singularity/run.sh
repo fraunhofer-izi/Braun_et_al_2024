@@ -1,6 +1,6 @@
 #!/bin/sh
 
-module load Singularity
+# module load Singularity
 # or install singularity: https://docs.sylabs.io/guides/latest/user-guide/quick_start.html
 
 # Define your port
@@ -8,7 +8,7 @@ export RSTUDIO_PORT=8072
 
 # we don't want to clutter the cluster directories, so each user sets up his own
 # rstudio-server-tmp for now
-export TMPDIR="/homes/$USER/RStudio-Server-Files/"
+export TMPDIR="/home/$USER/RStudio-Server-Files/"
 
 echo "Path where RStudio Server will write run-time state, logs, etc.:"
 echo $TMPDIR
