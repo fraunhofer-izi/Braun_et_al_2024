@@ -4,7 +4,7 @@ This repository contains code used to produce the results in: Till Braun, Michae
 
 ## Singularity
 
-All scripts were developed in a Singularity image with Rstudio server. [See README](singularity/) in `./singularity/`. 
+All scripts for the single-cell Analysis were developed in a Singularity image with Rstudio server. [See README](singularity/) in `./singularity/`. Viral integration and variant calling analysis was performed using the nf-core pipelines [https://nf-co.re/viralintegration/0.1.1/](https://nf-co.re/viralintegration/0.1.1/) and [https://nf-co.re/sarek/3.4.3/](https://nf-co.re/sarek/3.4.3/). A workflow for the WGS data including variant calling, reverse engineering of the cilta-cel vector sequence, and STAR alignment for integration site analysis is shown in `code/wgs/`
 
 ## Reproduction
 
@@ -17,10 +17,10 @@ The script must be run in the base path (./) of this repository. Following the c
 ``` sh
 #!/bin/bash
 
-# The script must be executed in the base path (./) of this repo
-
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-# scRNA-Seq, VDJ-Seq, ADT-Seq
+# scRNA-Seq, VDJ-Seq, ADT-Seq:
+# All analysis performed with the Singularity R studio image
+# The script must be executed in the base path (./) of this repo
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 Rscript code/multi_omics/01_cellranger.R
 Rscript code/multi_omics/02_cellranger_qc.R
@@ -38,7 +38,11 @@ Rscript code/publication/main/fig_02.R
 Rscript code/publication/supps/fig_02_supps.R
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-# WGS
+# WGS:
+# STAR and Samtools are required
+# https://nf-co.re/viralintegration/0.1.1/
+# https://nf-co.re/sarek/3.4.3/
+# see also code/wgs/
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # CTAT-VirusIntegrationFinder
@@ -55,8 +59,11 @@ bash code/wgs/STAR/06_NH1_HI1_AS100_filter_placeholder.sh
 Rscript code/wgs/STAR/07_STAR_IS_candidates.R #generates figure S17
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-# scRNA-seq mutation
+# scRNA-seq mutation:
+# For "01_indexing.sh" and "02_pileup.sh samtools" and BCFtools are required
+# The R scripts were run in the Singularity R Studio image
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# Samtools is required
 bash code/multi_omics/08_scRNA_mutations/01_indexing.sh
 bash code/multi_omics/08_scRNA_mutations/02_pileup.sh
 Rscript code/multi_omics/08_scRNA_mutations/03_summarize_data.R
