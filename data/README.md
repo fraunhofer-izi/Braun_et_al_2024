@@ -3,7 +3,8 @@
 ## feature_reference.csv
 The feature reference CSV file declares antibody capture constructs and associated barcodes. This file is required to run CellRanger with the ADT data.
 
-## variant calling
+## somatic_variants_filtered.csv and germline_variants_filtered.csv
+Lists of putative de-novo ("somatic") and pre-existing ("germline") driver mutations identified from all called variants via the filtering steps described in the manuscript. From these lists, the final 4 driver mutations reported in the manuscript have been identified via manual review and literature research.
 
 ## vis_reads/
 A fraction of WGS data pertaining to each found vector integration site respectively.
