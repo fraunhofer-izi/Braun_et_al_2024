@@ -35,11 +35,6 @@ Rscript code/publication/supps/fig_02_supps.R
 # https://nf-co.re/viralintegration/0.1.1/ and https://nf-co.re/sarek/3.4.3/
 # see also code/wgs/
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-# CTAT-VirusIntegrationFinder
-# bash code/wgs/ctat_vif/01_prep_db.sh
-# bash code/wgs/ctat_vif/02_run_vif.sh
-
 # STAR mappings for integration site analyis
 bash code/wgs/STAR/01_STARindex.sh
 bash code/wgs/STAR/02_arribaSetting_multiMapper_S1.sh
