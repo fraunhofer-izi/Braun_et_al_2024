@@ -9,7 +9,7 @@ library(ggplot2)
 
 ########## Addendum: all mutations for mutational-burden analysis ##############
 
-final.vcf = read.vcfR(file = "$OUTDIR/variant_calls_prefiltered/final/Koeln_1.mutect2.filtered_VEP.normalized.vcf.gz")
+final.vcf = read.vcfR(file = "code/wgs/variantcalling/variant_calls_prefiltered/final/Koeln_1.mutect2.filtered_VEP.normalized.vcf.gz")
 final.obj = vcfR2tidy(final.vcf, single_frame = T)
 
 tmp = final.obj$dat %>%
@@ -75,10 +75,6 @@ wgs_freq_df = tmp.plt %>%
   group_by(Indiv) %>%
   summarise( wgs_freq = n()/hg38_eff_genome_size)
 
-tmp.plt %>%
-  filter(type %in% c("exonic_nonsynonymous", "exonic_non-coding-region")) %>%
-  nrow()
-
 standard_chromosomes = paste0("chr", c(1:22, "X", "Y"))
 cds = rtracklayer::import("~/GENOMES/human/gencode_hg38/gencode.v46.primary_assembly.annotation.gtf.gz", format="gtf")
 cds_rows = subset(cds, transcript_type == "protein_coding" & type == "exon")
@@ -99,7 +95,7 @@ tmp.plt = tmp.plt %>%
 range_min = 13/64*hg38_eff_genome_size # lowest Schrader et al
 range_max = 150/64*hg38_eff_genome_size # highest Schrader et al
 
-tmp.plt %>%
+pl_tmp = tmp.plt %>%
   ggplot(aes(x=Indiv, fill=type)) +
   geom_rect(aes(xmin = -Inf, xmax = Inf, ymin = range_min, ymax = range_max),alpha=0.3, fill="grey85") +
   geom_hline(aes(yintercept=1.1*hg38_eff_genome_size), linetype="dashed", color="grey10")+
@@ -113,6 +109,12 @@ tmp.plt %>%
   guides(fill = guide_legend(title.position = "top"))
 
 ggsave2(
-  "figures/tmb_plot.png",
-  height=80, width=90, unit="mm", bg="white", dpi=400, scale=1.4
+  filename="publication/figures_tables/supps/ext_fig_08.png",
+  pl_tmp,
+  height=80,
+  width=90,
+  unit="mm",
+  bg="white",
+  dpi=400,
+  scale=1.4
 )
