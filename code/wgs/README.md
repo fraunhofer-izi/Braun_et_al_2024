@@ -21,8 +21,9 @@ Steps:
 * generate custom reference with cilta-cel -> ./data/
 * Perform steps 01_ till 07_ 
 
-## viralintegration_EBV = Investigation of Epstein-Barr-Virus (EBV) integration 
-* viralintegration pipeline used (nf-core Pipeline 'viralintegration' https://nf-co.re/viralintegration/0.1.1/docs/output/) for detection of EBV to exclude EBV as the cause for tumorigenesis
+## viralintegration 
+* viralintegration pipeline used (nf-core Pipeline 'viralintegration' https://nf-co.re/viralintegration/0.1.1/docs/output/)
+* also checked for Epstein-Barr-Virus (EBV) integration only
 
 Steps:
 * 01_run_viralintegration.sh
