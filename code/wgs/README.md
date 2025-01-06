@@ -23,7 +23,9 @@ Steps:
 
 ## viralintegration 
 * viralintegration pipeline used (nf-core Pipeline 'viralintegration' https://nf-co.re/viralintegration/0.1.1/docs/output/)
-* also checked for Epstein-Barr-Virus (EBV) integration only
+* run screen for complete viral databank (no input for --viral_fasta necessary, default setting used)
+* to checked for Epstein-Barr-Virus (EBV) integration only, specify viral_fasta in params.yaml with: 'viral_fasta ./data/EBV/GCF_002402265.1_ASM240226v1_genomic.fna'
+	* The viral fasta reference for EBV (human gammaherpesvirus 4) was downloaded from https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/002/402/265/GCF_002402265.1_ASM240226v1/.
 
 Steps:
 * 01_run_viralintegration.sh
