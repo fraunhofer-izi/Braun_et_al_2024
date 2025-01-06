@@ -3,7 +3,7 @@ outdir: ./results_EBV
 #genome: GRCh38
 fasta: ./data/GRCh38.primary_assembly.genome.fa
 gtf: ./data/gencode.v46.primary_assembly.basic.annotation.gtf
-viral_fasta: ./data/EBV/GCF_002402265.1_ASM240226v1_genomic.fna
+#viral_fasta: ./data/EBV/GCF_002402265.1_ASM240226v1_genomic.fna # uncomment if EBV search only
 email: your_email
 #multiqc_title: 
 #min_reads: 5
