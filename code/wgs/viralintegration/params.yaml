@@ -1,5 +1,5 @@
 input: samplesheet_merged.csv
-outdir: ./results_EBV
+outdir: ./results
 #genome: GRCh38
 fasta: ./data/GRCh38.primary_assembly.genome.fa
 gtf: ./data/gencode.v46.primary_assembly.basic.annotation.gtf
